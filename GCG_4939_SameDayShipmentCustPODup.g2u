@@ -1,0 +1,214 @@
+Program.Sub.ScreenSU.Start
+Gui.Form..Create
+Gui.Form..Size(5730,1725)
+Gui.Form..MinX(0)
+Gui.Form..MinY(0)
+Gui.Form..Position(0,0)
+Gui.Form..BackColor(-2147483633)
+Gui.Form..MousePointer(0)
+Gui.Form..Event(UnLoad,Form_UnLoad)
+Gui.Form..MaxButton(False)
+Gui.Form..Sizeable(False)
+Gui.Form..Caption("Same Day Shipment")
+Gui.Form.dtpStart.Create(DatePicker)
+Gui.Form.dtpStart.Size(1935,285)
+Gui.Form.dtpStart.Position(195,405)
+Gui.Form.dtpStart.Event(LostFocus,dtpStart_LostFocus)
+Gui.Form.dtpStart.TabStop(True)
+Gui.Form.dtpStart.TabIndex(1)
+Gui.Form.cmdPrint.Create(Button)
+Gui.Form.cmdPrint.Size(855,375)
+Gui.Form.cmdPrint.Position(390,870)
+Gui.Form.cmdPrint.Caption("Print")
+Gui.Form.cmdPrint.TabStop(True)
+Gui.Form.cmdPrint.TabIndex(4)
+Gui.Form.cmdPrint.Event(Click,cmdPrint_Click)
+Gui.Form.dtpEnd.Create(DatePicker)
+Gui.Form.dtpEnd.Size(1935,285)
+Gui.Form.dtpEnd.Position(2325,405)
+Gui.Form.dtpEnd.Event(LostFocus,dtpEnd_LostFocus)
+Gui.Form.dtpEnd.TabStop(True)
+Gui.Form.dtpEnd.TabIndex(2)
+Gui.Form.lblStartDate.Create(Label,"Start Date",True,1935,255,0,195,180,True,0,"Arial",8,-2147483633,0)
+Gui.Form.lblEndDate.Create(Label,"End Date",True,1935,255,0,2325,180,True,0,"Arial",8,-2147483633,0)
+Gui.Form.chkAll.Create(CheckBox)
+Gui.Form.chkAll.Size(1560,360)
+Gui.Form.chkAll.Position(4455,375)
+Gui.Form.chkAll.Caption("All Dates")
+Gui.Form.chkAll.Event(Click,chkAll_Click)
+Gui.Form.chkAll.TabStop(True)
+Gui.Form.chkAll.TabIndex(3)
+Gui.Form.lblProgress.Create(Label,"",True,3975,255,0,1305,990,True,0,"Arial",8,-2147483633,0)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'GAP: 4939 - Preprocessor for custom report
+'Author: Bix
+'Date 4/23/2018
+'Completed 4/27/2018
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+	Gui.Form..Show
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.Form_UnLoad.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.Form_UnLoad.End
+
+Program.Sub.chkAll_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+	F.Intrinsic.Control.If(V.Screen.Form!chkAll.Value,=,0)
+		Gui.Form.dtpStart.Enabled(True)
+		Gui.Form.dtpEnd.Enabled(True)
+	F.Intrinsic.Control.Else
+		Gui.Form.dtpStart.Enabled(False)
+		Gui.Form.dtpEnd.Enabled(False)
+	F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.chkAll_Click.End
+
+Program.Sub.dtpStart_LostFocus.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+	F.Intrinsic.Control.If(V.Screen.Form!dtpStart.Value,>,V.Screen.Form!dtpEnd.Value)
+		Gui.Form.dtpStart.Value(V.Screen.Form!dtpEnd.Value)
+	F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.dtpStart_LostFocus.End
+
+Program.Sub.dtpEnd_LostFocus.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+	
+	F.Intrinsic.Control.If(V.Screen.Form!dtpStart.Value,>,V.Screen.Form!dtpEnd.Value)
+		Gui.Form.dtpEnd.Value(V.Screen.Form!dtpStart.Value)
+	F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.dtpEnd_LostFocus.End
+
+Program.Sub.cmdPrint_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+	V.Local.sFilter.Declare(String)
+	V.Local.sParams.Declare(String)
+	V.Local.sValues.Declare(String)
+	V.Local.iReport.Declare(Long)
+	
+	Gui.Form.cmdPrint.Enabled(False)
+	
+	F.Intrinsic.Control.If(V.Screen.Form!chkAll.Value,=,0)
+		F.Intrinsic.String.Build("DATE >= #{0}# AND DATE <= #{1}#",V.Screen.Form!dtpStart.Text,V.Screen.Form!dtpEnd.Text,V.Local.sFilter)
+	F.Intrinsic.Control.EndIf
+	
+	'loading list of Cust POs that have duplicates and saving them to a DB table
+	F.Intrinsic.Control.CallSub(OpenConnection)
+	F.Data.DataTable.CreateFromSQL("CheckCustPO","con","select CUSTOMER + '===' + CUSTOMER_PO as CustAndCustPO from (select distinct CUSTOMER, CUSTOMER_PO, ORDER_NO, DATE_ORDER from V_ORDER_HIST_HEAD where ORDER_NO<>'0000000') A group by CUSTOMER, CUSTOMER_PO, DATE_ORDER having count(CUSTOMER_PO) > 1")
+	F.ODBC.Connection!con.Execute("delete from GCG_4939_FILTER_HIST")
+	F.Data.DataTable.SaveToDB("CheckCustPO","con","GCG_4939_FILTER_HIST","",128,"CustAndCustPO@!@CustAndCustPO")
+	F.Data.DataTable.Close("CheckCustPO")
+
+	'loading Order lines based on DB table saved to above and then using Dictionaries to load table from other tables
+	Gui.Form.lblProgress.Text("Loading Order Line data...")
+	F.Data.DataTable.CreateFromSQL("Data","con","select distinct CUSTOMER, '' as NAME_CUSTOMER, LTRIM(RTRIM(CUSTOMER_PO)) as CUSTOMER_PO, ORDER_NO, ORDER_SUFFIX, ORDER_LINE, '' as DATE, left(PART, 17) as PART, right(PART, 3) as REV from V_ORDER_HIST_LINE where CUSTOMER + '===' + CUSTOMER_PO in (select CustAndCustPO from GCG_4939_FILTER_HIST) and PART<>'FREIGHT' and CUSTOMER_PO<>''")
+	F.Data.Dictionary.CreateFromSQL("CustList","con","select CUSTOMER, LTRIM(RTRIM(NAME_CUSTOMER)) from V_CUSTOMER_MASTER")
+	F.Data.DataTable.FillFromDictionary("Data","CustList","CUSTOMER","NAME_CUSTOMER")
+	F.Data.Dictionary.Close("CustList")
+	F.Data.DataTable.AddExpressionColumn("Data","ORDERHEADKEY","String","ORDER_NO+ORDER_SUFFIX")
+	F.Data.Dictionary.CreateFromSQL("DateList","con","select ORDER_NO+ORDER_SUFFIX As OrderList, DATE_ORDER from V_ORDER_HIST_HEAD WHERE OrderList <> '00000000000'")
+	F.Data.Dictionary.SetDefaultReturn("DateList","12/31/9999")
+	F.Data.DataTable.FillFromDictionary("Data","DateList","ORDERHEADKEY","DATE")
+	F.Data.Dictionary.Close("DateList")
+	F.Data.DataTable.RemoveColumn("Data","ORDERHEADKEY")
+	F.Data.DataTable.RemoveColumn("Data","ORDER_SUFFIX")
+
+	'Apply Date filter based on selection in Preproc
+	F.Data.DataView.Create("Data","DataFilter",22,V.Local.sFilter,"")
+	F.Data.DataView.SetSort("Data","DataFilter","NAME_CUSTOMER DESC, CUSTOMER_PO ASC, ORDER_NO ASC, ORDER_LINE DESC")
+	F.Data.DataView.ToDataTable("Data","DataFilter","FilteredData",True)
+	F.ODBC.Connection!con.Execute("delete from GCG_4939_SAME_DAY")
+	F.Data.DataTable.SaveToDB("FilteredData","con","GCG_4939_SAME_DAY","",128,"CUSTOMER@!@CUSTOMER*!*NAME_CUSTOMER@!@NAME_CUSTOMER*!*CUSTOMER_PO@!@CUSTOMER_PO*!*ORDER_NO@!@ORDER_NO*!*ORDER_LINE@!@ORDER_LINE*!*PART@!@PART*!*REV@!@REV*!*DATE@!@DATE")
+
+	F.Intrinsic.Control.CallSub(CloseConnection)
+
+	F.Data.DataView.Close("Data","DataFilter")
+	F.Data.DataTable.Close("FilteredData")
+	F.Data.DataTable.Close("Data")
+	
+	F.Intrinsic.String.Build("{0}","CompanyName",V.Local.sParams)
+	F.Intrinsic.String.Build("{0}",V.Ambient.CompanyName,V.Local.sValues)
+	F.Intrinsic.String.Split(V.Local.sParams,"*!*",V.Local.sParams)
+	F.Intrinsic.String.Split(V.Local.sValues,"*!*",V.Local.sValues)
+	F.Global.BI.GetIDFromName("GCG_4939_SAME_DAY_SHIPMENTS.RPT",V.Local.iReport)
+	F.Global.BI.PrintReport(V.Local.iReport,0,V.Local.sParams,V.Local.sValues,V.Printer.DeviceName,False)
+	
+	F.Intrinsic.Control.CallSub(Form_UnLoad)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdPrint_Click.End
+
+Program.Sub.OpenConnection.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+	F.ODBC.Connection!con.OpenCompanyConnection
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.OpenConnection.End
+
+Program.Sub.CloseConnection.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+	F.ODBC.Connection!con.Close
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.CloseConnection.End
